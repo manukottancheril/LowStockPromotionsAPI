@@ -26,7 +26,7 @@ public class StockPromotionService {
                     Integer excessQuantity = productDto.currentStock() - productDto.minRequiredStock();
                     String discount = findDiscount(excessQuantity);
                     return new PromotionDto(productDto.id(), productDto.name(), excessQuantity, discount);
-                }).sorted(Comparator.comparing((PromotionDto p) -> Double.parseDouble(p.discount().replace("%", ""))).reversed().thenComparing(PromotionDto::name))
+                }).sorted(Comparator.comparing((PromotionDto p) -> Double.parseDouble(p.discount().replace("%", ""))).reversed().thenComparing(p->p.name().toLowerCase()))
                 .collect(Collectors.toList());
         return new PromotionsDto(promotionList);
     }
